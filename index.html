@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101014">
+<title>MY FIT — Personal Fitness Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MY FIT">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">M</span><div><b>MY FIT</b><small>PERSONAL TRACKER</small></div></div>
+    <div class="profile-mini"><div class="avatar">75</div><div><b>My Transformation</b><small>Body recomposition</small></div></div>
+    <nav id="nav">
+      <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+      <button class="nav-link" data-page="workout"><span>✦</span> Workout plan</button>
+      <button class="nav-link" data-page="nutrition"><span>◉</span> Nutrition</button>
+      <button class="nav-link" data-page="body"><span>↗</span> Body measurements</button>
+      <button class="nav-link" data-page="calendar"><span>▦</span> Weekly calendar</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="goal-card"><span class="eyebrow">YOUR MAIN GOAL</span><h3>LEANER.<br>STRONGER.</h3><p>Lose fat. Build muscle. Stay consistent.</p></div><small class="muted">Your data stays on this device.</small></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><span class="eyebrow" id="todayLabel">YOUR FITNESS JOURNEY</span><h1 id="pageTitle">Dashboard</h1></div><div class="top-actions"><button class="icon-btn" id="exportBtn" title="Export backup">⇩</button><button class="icon-btn" id="importBtn" title="Import backup">⇧</button><input type="file" id="importFile" accept="application/json" hidden><div class="date-pill" id="datePill"></div></div></header>
+    <section id="dashboard" class="page active">
+      <div class="welcome"><div><span class="eyebrow">YOUR PERSONAL FITNESS TRACKER</span><h2>BUILD YOUR<br><em>BEST SELF.</em></h2><p>Small actions. Consistent progress. Stronger every week.</p></div><div class="welcome-stat"><span>STARTING WEIGHT</span><strong>75<span>kg</span></strong><small>Target: body recomposition</small></div></div>
+      <div class="stat-grid">
+        <article class="stat-card"><span>Today's calories</span><strong id="dashCalories">0 <small>/ 2350</small></strong><div class="progress"><i id="calProgress"></i></div></article>
+        <article class="stat-card"><span>Protein</span><strong id="dashProtein">0 <small>/ 160g</small></strong><div class="progress red"><i id="proteinProgress"></i></div></article>
+        <article class="stat-card"><span>Water</span><strong id="dashWater">0 <small>/ 2500ml</small></strong><div class="progress blue"><i id="waterProgress"></i></div></article>
+        <article class="stat-card"><span>Workout</span><strong id="dashWorkout">0 <small>exercises done</small></strong><div class="progress green"><i id="workoutProgress"></i></div></article>
+      </div>
+      <div class="two-col">
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">TODAY'S PLAN</span><h3 id="todayWorkoutTitle">Workout</h3></div><button class="text-btn" data-goto="workout">View plan →</button></div><div id="todayWorkout" class="today-list"></div></article>
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">QUICK ACTION</span><h3>Daily water</h3></div><span class="drop">◉</span></div><div class="water-big"><strong id="waterBig">0</strong><span> / 2500 ml</span></div><div class="water-buttons"><button data-water="250">+250 ml</button><button data-water="500">+500 ml</button><button data-water="-250">−250 ml</button></div><div class="progress blue"><i id="waterBigProgress"></i></div></article>
+      </div>
+      <article class="panel"><div class="panel-head"><div><span class="eyebrow">WEEKLY OVERVIEW</span><h3>Your consistency</h3></div><button class="text-btn" data-goto="calendar">Full calendar →</button></div><div id="weekStrip" class="week-strip"></div></article>
+      <div class="two-col">
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">BODY COMPOSITION</span><h3>Weight trend</h3></div><span class="muted">kg</span></div><div id="weightChart" class="chart"></div></article>
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">YOUR BASELINE</span><h3>Starting measurements</h3></div><button class="text-btn" data-goto="body">Update →</button></div><div class="baseline"><div><span>Weight</span><b>75 kg</b></div><div><span>Height</span><b>173 cm</b></div><div><span>Waist</span><b>34 in</b></div><div><span>Daily target</span><b>2,350 kcal</b></div></div></article>
+      </div>
+    </section>
+    <section id="workout" class="page">
+      <div class="section-intro"><span class="eyebrow">5 DAYS STRENGTH + 2 DAYS ACTIVE RECOVERY</span><h2>TRAIN WITH<br><em>INTENTION.</em></h2><p>Tick off each exercise as you complete it. Record the weight used to track progressive overload.</p></div>
+      <div class="toolbar"><input type="date" id="workoutDate"><span class="muted" id="workoutDay"></span><button class="outline-btn" id="clearWorkout">Clear today's checks</button></div>
+      <div id="workoutContent"></div>
+      <div class="note">Training guide: warm up for 5–10 minutes. Keep 1–3 reps in reserve on most sets. Rest 2–3 minutes for heavy compound lifts and 60–90 seconds for accessory exercises. Adjust loads to maintain safe form.</div>
+    </section>
+    <section id="nutrition" class="page">
+      <div class="section-intro"><span class="eyebrow">FUEL YOUR TRAINING</span><h2>EAT WELL.<br><em>GET STRONG.</em></h2><p>Starting targets: 2,350 kcal · 160g protein · 270g carbs · 70g fat.</p></div>
+      <div class="toolbar"><input type="date" id="nutritionDate"><button class="outline-btn" id="resetFood">Clear selected day</button></div>
+      <div class="macro-grid" id="macroGrid"></div>
+      <div class="two-col nutrition-layout">
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">FOOD DIARY</span><h3>Add a meal or food</h3></div></div>
+          <form id="foodForm" class="food-form">
+            <label>Food / meal<input required id="foodName" placeholder="e.g. 2 boiled eggs"></label>
+            <div class="form-row"><label>Calories<input type="number" min="0" id="foodCal" required placeholder="150"></label><label>Protein (g)<input type="number" min="0" step=".1" id="foodProtein" value="0"></label></div>
+            <div class="form-row"><label>Carbs (g)<input type="number" min="0" step=".1" id="foodCarbs" value="0"></label><label>Fat (g)<input type="number" min="0" step=".1" id="foodFat" value="0"></label></div>
+            <label>Meal type<select id="foodMeal"><option>Breakfast</option><option>Morning snack</option><option>Lunch</option><option>Pre-workout</option><option>Post-workout</option><option>Dinner</option><option>Other</option></select></label>
+            <button class="primary-btn" type="submit">+ Add to food diary</button>
+          </form>
+        </article>
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">TODAY'S INTAKE</span><h3>Food entries</h3></div></div><div id="foodList" class="food-list"></div></article>
+      </div>
+      <div class="panel water-panel"><div class="panel-head"><div><span class="eyebrow">HYDRATION</span><h3>Water tracker</h3></div><strong id="nutritionWater">0 / 2500 ml</strong></div><div class="water-buttons"><button data-water="250">+250 ml</button><button data-water="500">+500 ml</button><button data-water="-250">−250 ml</button></div><div class="progress blue"><i id="nutritionWaterProgress"></i></div></div>
+      <div class="note">Calories and macro values are estimates. Use food labels or a reliable nutrition database for more accurate entries. The 2,350 kcal target is a starting estimate; review your 2–3 week weight and waist trend before adjusting.</div>
+    </section>
+    <section id="body" class="page">
+      <div class="section-intro"><span class="eyebrow">MEASURE WHAT MATTERS</span><h2>TRACK YOUR<br><em>PROGRESS.</em></h2><p>Record measurements under similar conditions, ideally in the morning.</p></div>
+      <div class="two-col">
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">NEW ENTRY</span><h3>Body measurements</h3></div></div>
+          <form id="bodyForm" class="food-form">
+            <label>Date<input type="date" id="bodyDate" required></label>
+            <div class="form-row"><label>Weight (kg)<input type="number" step=".1" min="0" id="bodyWeight" placeholder="75"></label><label>Waist (in)<input type="number" step=".1" min="0" id="bodyWaist" placeholder="34"></label></div>
+            <div class="form-row"><label>Chest (in)<input type="number" step=".1" min="0" id="bodyChest" placeholder="Optional"></label><label>Arm (in)<input type="number" step=".1" min="0" id="bodyArm" placeholder="Optional"></label></div>
+            <label>Notes<textarea id="bodyNotes" placeholder="Energy, strength, how clothes fit..."></textarea></label>
+            <button class="primary-btn">Save measurement</button>
+          </form>
+        </article>
+        <article class="panel"><div class="panel-head"><div><span class="eyebrow">LATEST RECORDS</span><h3>Measurement history</h3></div></div><div id="measurementList" class="measurement-list"></div></article>
+      </div>
+      <article class="panel"><div class="panel-head"><div><span class="eyebrow">PROGRESS VISUAL</span><h3>Weight & waist history</h3></div></div><div id="bodyChart" class="chart"></div></article>
+    </section>
+    <section id="calendar" class="page">
+      <div class="section-intro"><span class="eyebrow">STAY CONSISTENT</span><h2>YOUR WEEKLY<br><em>CALENDAR.</em></h2><p>See your planned training and completed sessions at a glance.</p></div>
+      <div class="toolbar"><button class="outline-btn" id="prevWeek">← Previous</button><b id="calendarRange"></b><button class="outline-btn" id="nextWeek">Next →</button></div>
+      <div id="calendarGrid" class="calendar-grid"></div>
+      <div class="note">A day is marked complete when all exercises in that day's workout are checked. Cardio and rest days can be marked manually in the calendar.</div>
+    </section>
+    <footer>MY FIT • Personal use only • Your records are stored in this browser on this device.</footer>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<script src="app.js"></script>
+<script>if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{})); }</script>
+</body></html>
